@@ -15,9 +15,9 @@ func main() {
 
 	router := getRouter()
 
-	log.Println("[INFO] Listening on http://localhost:8888")
+	log.Println("[INFO] Listening on http://localhost:80")
 
-	err = http.ListenAndServe(":8888", router)
+	err = http.ListenAndServe(":80", router)
 	if err != nil {
 		log.Fatal("ListenAndServe Error: ", err)
 	}

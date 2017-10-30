@@ -4,7 +4,7 @@ clean:
 	rm -rf pkg bin
 
 deploy: dockerbuild down
-	docker run -d --name keystore_service -p 8080:8888 keystore
+	docker run -d --name keystore_service -p 8080:80 keystore
 
 up: build
 	./Keystore

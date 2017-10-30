@@ -4,7 +4,7 @@ RUN apk add --update bash curl && rm -rf /var/cache/apk/*
 
 ADD Keystore /bin/Keystore
 
-EXPOSE 8080
+EXPOSE 80
 
 RUN mkdir keys
 
