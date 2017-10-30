@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -65,24 +65,17 @@ func writeKey(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "Request was not of the right type")
 		return
 	}
-	//create a file with the keyID as the filename
-	f, err := os.Create("./keys/" + keyMeta.ID)
-	defer f.Close()
+	//create a file with the keyID as the filename and write the request bytes to it
+	err = ioutil.WriteFile("keys/"+keyMeta.ID, reqBytes, 0777)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, "Could not create new file")
 		return
 	}
-	//write the bytes of the request to the keyfile
-	_, err = f.Write(reqBytes)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprint(w, "Could not write to file")
-		return
-	}
 	//success
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, fmt.Sprintf("Stored key %s", keyMeta.ID))
+	log.Printf("Stored key %s", keyMeta.ID)
 	return
 }
 
