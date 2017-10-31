@@ -1,4 +1,4 @@
-package main
+package keystoreAPI
 
 import (
 	"encoding/json"
@@ -18,6 +18,10 @@ type KeyMetadata struct {
 	InvalidAfter time.Time `json:"expires"`
 }
 
+type GetKeyListOutput struct {
+	KeyIDList []string `json:"keys,omitempty"`
+}
+
 func getKeyList(w http.ResponseWriter, r *http.Request) {
 	//get files in keys directory
 	files, err := ioutil.ReadDir("./keys")
@@ -26,12 +30,8 @@ func getKeyList(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "Could not get keys")
 		return
 	}
-	//create a return type
-	jsonArray := struct {
-		KeyIDList []string `json:"keys"`
-	}{
-		KeyIDList: []string{},
-	}
+	//initialize return type
+	jsonArray := GetKeyListOutput{}
 	//append filenames to the return array
 	for _, f := range files {
 		jsonArray.KeyIDList = append(jsonArray.KeyIDList, f.Name())

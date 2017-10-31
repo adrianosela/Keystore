@@ -1,8 +1,9 @@
-package main
+package keystoreAPI
 
 import "github.com/gorilla/mux"
 
-func getRouter() *mux.Router {
+//GetKeystoreRouter returns the API's router
+func GetKeystoreRouter() *mux.Router {
 
 	router := mux.NewRouter()
 
