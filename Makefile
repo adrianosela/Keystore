@@ -6,6 +6,15 @@ all: build
 clean:
 	rm -rf pkg bin
 
-build:
+dockerbuild: dep
 	GOOS=linux GOARCH=amd64 go build -a -o $(NAME)
 	docker build -t $(NAME)-image .
+
+build: dep
+	go build -o $(NAME)
+
+dep:
+	 go get -v
+
+down:
+	(docker stop $(NAME)-container || true) && (docker rm $(NAME)-container || true)
