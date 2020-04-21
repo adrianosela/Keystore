@@ -1,19 +1,11 @@
+NAME:=$(shell basename `git rev-parse --show-toplevel`)
+HASH:=$(shell git rev-parse --verify --short HEAD)
+
 all: build
 
 clean:
 	rm -rf pkg bin
 
-deploy: dockerbuild down
-	docker run -d --name keystore_service -p 8080:80 keystore
-
-up: build
-	./Keystore
-
-dockerbuild:
-	./dockerbuild.sh
-
 build:
-	go build -o ./Keystore
-
-down:
-	(docker stop keystore_service || true) && (docker rm keystore_service || true)
+	GOOS=linux GOARCH=amd64 go build -a -o $(NAME)
+	docker build -t keystore .
