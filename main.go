@@ -1,31 +1,22 @@
 package main
 
 import (
+	"github.com/adrianosela/keystore/api"
 	"io/ioutil"
 	"log"
 	"net/http"
-
-	"github.com/adrianosela/keystore/api"
 )
 
 func main() {
-	//check the keys directory is in place
-	err := checkPreconditions()
+	// check precondition: keys directory is in place
+	_, err := ioutil.ReadDir("./keys")
 	if err != nil {
 		log.Fatalf("Could not read keys directory. %s", err)
 	}
 
-	router := api.Router()
-
 	log.Println("[INFO] Listening on http://localhost:80")
-
-	err = http.ListenAndServe(":80", router)
+	err = http.ListenAndServe(":80", api.Router())
 	if err != nil {
 		log.Fatal("ListenAndServe Error: ", err)
 	}
-}
-
-func checkPreconditions() error {
-	_, err := ioutil.ReadDir("./keys")
-	return err
 }
