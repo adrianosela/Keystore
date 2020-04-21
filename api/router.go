@@ -1,15 +1,14 @@
-package keystoreAPI
+package api
 
 import "github.com/gorilla/mux"
 
-//GetKeystoreRouter returns the API's router
-func GetKeystoreRouter() *mux.Router {
-
+// Router returns the api's router
+func Router() *mux.Router {
 	router := mux.NewRouter()
 
-	router.Methods("GET").Path("/keys").HandlerFunc(getKeyList)
 	router.Methods("POST").Path("/key").HandlerFunc(writeKey)
 	router.Methods("GET").Path("/key/{key_id}").HandlerFunc(readKey)
+	router.Methods("GET").Path("/keys").HandlerFunc(readKeys)
 
 	return router
 }

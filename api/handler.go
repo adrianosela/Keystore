@@ -1,4 +1,4 @@
-package keystoreAPI
+package api
 
 import (
 	"encoding/json"
@@ -11,7 +11,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//KeyMetadata represents the format in which we will cache and store keys
+// KeyMetadata represents the format in which we will cache and store keys
 type KeyMetadata struct {
 	KeyPem       []byte    `json:"key_pem"`
 	ID           string    `json:"key_id"`
@@ -22,7 +22,7 @@ type GetKeyListOutput struct {
 	KeyIDList []string `json:"keys,omitempty"`
 }
 
-func getKeyList(w http.ResponseWriter, r *http.Request) {
+func readKeys(w http.ResponseWriter, r *http.Request) {
 	//get files in keys directory
 	files, err := ioutil.ReadDir("./keys")
 	if err != nil {

@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/adrianosela/Keystore/keystoreapi"
+	"github.com/adrianosela/keystore/api"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 		log.Fatalf("Could not read keys directory. %s", err)
 	}
 
-	router := keystoreAPI.GetKeystoreRouter()
+	router := api.Router()
 
 	log.Println("[INFO] Listening on http://localhost:80")
 
