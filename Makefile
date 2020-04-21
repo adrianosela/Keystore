@@ -8,4 +8,4 @@ clean:
 
 build:
 	GOOS=linux GOARCH=amd64 go build -a -o $(NAME)
-	docker build -t keystore .
+	docker build -t $(NAME)-image .
